@@ -56,16 +56,13 @@ puts People.ancestors
 class MyCar 
 	attr_accessor :color
 	attr_reader :year 
+	attr_reader :model
 
 	def initialize(year, color, model)
 		@year = year  
 		@color = color 
 		@model = model
 		@speed = 0 
-	end 
-
-	def info 
-		puts "This #{@color} #{@model} was made in #{@year}." 
 	end 
 
 	def speed_up(number)
@@ -91,8 +88,17 @@ class MyCar
 		self.color = color 
 		puts "You have painted your car #{color}!"
 	end 
+
+	def self.calculate_gas_mileage(miles_driven, gallons_used)                   #Class method
+		puts "The gas mileage is #{miles_driven/gallons_used} miles per gallon."
+	end 
+
+	def to_s
+		"This #{color} #{model} was made in #{year}." 
+	end 
 end 
 
+# PART 2 
 # EXERCISE 1 
 beetle = MyCar.new(2000, 'red', 'VW Beetle')
 # beetle.info 
@@ -104,6 +110,13 @@ beetle = MyCar.new(2000, 'red', 'VW Beetle')
 # beetle.shut_off
 # beetle.current_speed
 
-# EXERCISE 2 + 3 
+# EXERCISES 2 + 3 
 # puts beetle.year # => 2000 
 # beetle.spray_paint('blue') # => You have painted your car blue!
+
+# PART 3 
+# EXERCISE 1
+# MyCar.calculate_gas_mileage(240, 5).  #added class method to calculate gas mileage 
+
+# EXERCISE 2
+# puts beetle                           #overrode to_s in order to output something nicer for user 
