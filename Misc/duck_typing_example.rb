@@ -1,21 +1,33 @@
 # DUCK TYPING, EXPLAINED
 # Date: 03/09/21
 
-# EXPLANATION 
-# Chef, Decorator, and Musician all have an instance method called prepare_wedding.
-# We can reference the prepare_wedding method inside of the Wedding class's prepare method, without specifically 
-# needing to specify which version of prepare_wedding we're referring to during each iteration. 
+# EXPLANATION
+# Chef, Decorator, and Musician all have an instance
+# method called prepare_wedding.
+# We can reference the prepare_wedding method inside of
+# the Wedding class's prepare method, without specifically
+# needing to specify which version of prepare_wedding
+# we're referring to during each iteration.
 
-# We do not need to know if the preparer is a Chef, Decorator, or Musician. 
-# All preparers have the ability to prepare a wedding whether they are a Chef, Decorator, or a Musician.
+# We do not need to know if the preparer is a Chef,
+# Decorator, or Musician.
+# All preparers have the ability to prepare a wedding
+# whether they are a Chef, Decorator, or a Musician
 
-# In other words, we don't need to check if the Chef, Decorator, or Musician is a preparer. It's good enough to know that 
-# Chef, Decorator, and Musician acts and behaves like a preparer, and we can trust them to do the job of prepare_wedding.
+# In other words, we don't need to check if the Chef,
+# Decorator, or Musician is a preparer. It's good enough
+# to know that Chef, Decorator, and Musician acts and
+# behaves like a preparer, and we can trust them to do
+# the job of prepare_wedding.
 
-# In the duck idiom, we don't need to check whether it is a duck, but it's good enough to know it quacks like a duck, walks 
-# like a duck, and etc. As long as it behaves like a duck, it is as good as if it were a real duck. 
-# In the preparer example, as long as Chef, Decorator or Musician behaves like a preparer, we can put a broad label on them 
-# and call them preparers to do the prepare_wedding job. 
+# In the duck idiom, we don't need to check whether it is a
+# duck, but it's good enough to know it quacks like a duck,
+# walks like a duck, and etc. As long as it behaves like a
+# duck, it is as good as if it were a real duck.
+# In the preparer example, as long as Chef, Decorator or
+# Musician behaves like a preparer, we can put a broad label
+# on them and call them preparers to do the prepare_wedding
+# job.
 
 class Wedding
   attr_reader :guests, :flowers, :songs
@@ -31,7 +43,6 @@ class Wedding
       preparer.prepare_wedding(self)
     end
   end
-
 end
 
 class Chef
