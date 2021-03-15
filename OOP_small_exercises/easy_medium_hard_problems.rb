@@ -1,4 +1,4 @@
-# LESSON 4 PRACTICE PROBLEMS - EASY 1, EASY 2, EASY 3
+# LESSON 4 PRACTICE PROBLEMS - EASY 1, EASY 2, EASY 3, MEDIUM 1, HARD 1
 
 # Lesson 4: OOP Practice Problems
 # Practice Problems Easy 1 (Questions 1-10)
@@ -548,4 +548,329 @@ end
 # the Light class.
 
 #--------------------------------------------------------------------------------------------------------
+
+# Lesson 4: OOP Practice Problems
+# Practice Problems Medium 1 (Questions 1-7)
+# Date: 03/14/21
+
+# Question 1
+# Alyssa glanced over the code quickly and said - "It looks fine, except that you forgot to put the `@` symbol 
+# before balance when you refer to the balance instance variable in the body of the positive_balance? method."
+
+# "Not so fast", Ben replied. "What I'm doing here is valid - I'm not missing an @!"
+
+# Who is right, Ben or Alyssa, and why?
+
+class BankAccount
+  attr_reader :balance
+
+  def initialize(starting_balance)
+    @balance = starting_balance
+  end
+
+  def positive_balance?
+    balance >= 0
+  end
+end
+
+# Answer - Ben is right bc we have `attr_reader :balance`, so we don't need `@`. 
+# "This means that Ruby will automatically create a method called balance that returns the value of 
+# the @balance instance variable." 
+
+#--------------------------------------------------------------------------------------------------------
+
+# Question 2
+# Alyssa looked at the code and spotted a mistake. "This will fail when update_quantity is called", she says.
+# Can you spot the mistake and how to address it?
+
+class InvoiceEntry
+  attr_reader :quantity, :product_name
+
+  def initialize(product_name, number_purchased)
+    @quantity = number_purchased
+    @product_name = product_name
+  end
+
+  def update_quantity(updated_count)
+    # prevent negative quantities from being set
+    @quantity = updated_count if updated_count >= 0
+  end
+end
+
+# Mistake = the quantity won't actually get updated; to fix this, use `@quantity` instead 
+# (or, alternately, create a setter method)
+
+#--------------------------------------------------------------------------------------------------------
+
+# Question 3
+
+class InvoiceEntry
+  attr_reader :quantity, :product_name
+
+  def initialize(product_name, number_purchased)
+    @quantity = number_purchased
+    @product_name = product_name
+  end
+
+  def update_quantity(updated_count)
+    quantity = updated_count if updated_count >= 0
+  end
+end
+
+# Alyssa noticed that this will fail when update_quantity is called. Since quantity is an instance variable, 
+# it must be accessed with the @quantity notation when setting it. One way to fix this is to change attr_reader to 
+# attr_accessor and change quantity to self.quantity.
+
+# Is there anything wrong with fixing it this way?
+# LS answer: "Nothing incorrect syntactically. However, you are altering the public interfaces of the class. 
+# In other words, you are now allowing clients of the class to change the quantity directly (calling the accessor 
+# with the instance.quantity = <new value> notation) rather than by going through the update_quantity method. 
+# It means that the protections built into the update_quantity method can be circumvented and potentially pose problems 
+# down the line." 
+
+#--------------------------------------------------------------------------------------------------------
+
+# Question 4
+
+# Let's practice creating an object hierarchy.
+
+# Create a class called Greeting with a single instance method called greet that takes a string argument and 
+# prints that argument to the terminal.
+
+class Greeting 
+  def greet(string)
+    puts string 
+  end 
+end 
+
+class Hello < Greeting 
+  def hi 
+    greet("Hello")
+  end 
+end 
+
+class Goodbye < Greeting 
+  def goodbye
+    greet("Goodbye")
+  end
+end 
+
+#--------------------------------------------------------------------------------------------------------
+
+# Question 5
+
+# My way
+class KrispyKreme
+  def initialize(filling_type, glazing)
+    @filling_type = filling_type
+    @glazing = glazing
+  end
+
+  def to_s
+    if @filling_type == nil && @glazing == nil
+      "Plain"
+    elsif @filling_type == nil 
+      "Plain with #{@glazing}"
+    elsif @glazing == nil 
+      "#{@filling_type}"
+    else 
+      "#{@filling_type} with #{@glazing}"
+    end 
+  end 
+end
+
+# LS way (better)
+class KrispyKreme
+  def initialize(filling_type, glazing)
+    @filling_type = filling_type
+    @glazing = glazing
+  end
+
+   def to_s
+    filling_string = @filling_type ? @filling_type : "Plain"
+    glazing_string = @glazing ? " with #{@glazing}" : ''
+    filling_string + glazing_string
+  end
+end
+
+donut1 = KrispyKreme.new(nil, nil)
+donut2 = KrispyKreme.new("Vanilla", nil)
+donut3 = KrispyKreme.new(nil, "sugar")
+donut4 = KrispyKreme.new(nil, "chocolate sprinkles")
+donut5 = KrispyKreme.new("Custard", "icing")
+
+puts donut1 # => "Plain"
+puts donut2 # => "Vanilla"
+puts donut3 # => "Plain with sugar"
+puts donut4 # => "Plain with chocolate sprinkles"
+puts donut5 # => "Custard with icing"
+
+#--------------------------------------------------------------------------------------------------------
+
+# Question 6 
+# What is the difference in the way the code works?
+# The second example has a redundant `self` (the code still works, but `self` isn't needed bc of `attr_accessor :template`)
+
+class Computer
+  attr_accessor :template
+
+  def create_template
+    @template = "template 14231"
+  end
+
+  def show_template
+    template
+  end
+end
+
+class Computer
+  attr_accessor :template
+
+  def create_template
+    self.template = "template 14231"
+  end
+
+  def show_template
+    self.template
+  end
+end
+
+#--------------------------------------------------------------------------------------------------------
+
+# Question 7
+
+# How could you change the method name below so that the method name is more clear and less repetitive?
+
+class Light
+  attr_accessor :brightness, :color
+
+  def initialize(brightness, color)
+    @brightness = brightness
+    @color = color
+  end
+
+  def light_status # => just change to "status" so "light" isn't repeated twice whenever this is called 
+    "I have a brightness level of #{brightness} and a color of #{color}"
+  end
+end 
+
+#--------------------------------------------------------------------------------------------------------
+
+# Lesson 4: OOP Practice Problems 
+# Practice Problems Hard 1 (Questions 1-4)
+# Date: 03/15/21
+
+# Question 1 
+# Alyssa has been assigned a task of modifying a class that was initially created to keep track of secret information. 
+# The new requirement calls for adding logging, when clients of the class attempt to access the secret data. 
+# Here is the class in its current form:
+
+class SecretFile
+  def initialize(secret_data, logger)
+    @data = secret_data
+    @logger = logger 
+  end
+
+  def data 
+    @logger.create_log_entry
+    @data 
+  end 
+end
+
+# She needs to modify it so that any access to data must result in a log entry being generated. 
+# That is, any call to the class which will result in data being returned must first call a logging class. 
+# The logging class has been supplied to Alyssa and looks like the following:
+
+class SecurityLogger
+ ##
+end
+#--------------------------------------------------------------------------------------------------------
+
+# Question 2
+# Ben and Alyssa are working on a vehicle management system. So far, they have created classes called Auto and 
+# Motorcycle to represent automobiles and motorcycles. After having noticed common information and calculations 
+# they were performing for each type of vehicle, they decided to break out the commonality into a separate class 
+# called WheeledVehicle. This is what their code looks like so far:
+
+module Moveable 
+  attr_accessor :speed, :heading 
+  attr_writer :fuel_capacity, :fuel_efficiency
+
+  def range 
+    @fuel_capacity * fuel_efficiency
+  end
+end 
+
+class WheeledVehicle
+  include Moveable
+
+  def initialize(tire_array, km_traveled_per_liter, liters_of_fuel_capacity)
+    @tires = tire_array
+    self.fuel_efficiency = km_traveled_per_liter
+    self.fuel_capacity = liters_of_fuel_capacity
+  end
+
+  def tire_pressure(tire_index)
+    @tires[tire_index]
+  end
+
+  def inflate_tire(tire_index, pressure)
+    @tires[tire_index] = pressure
+  end
+
+  def range
+    @fuel_capacity * @fuel_efficiency
+  end
+end
+
+class Auto < WheeledVehicle
+  def initialize
+    # 4 tires are various tire pressures
+    super([30,30,32,32], 50, 25.0)
+  end
+end
+
+class Motorcycle < WheeledVehicle
+  def initialize
+    # 2 tires are various tire pressures
+    super([20,20], 80, 8.0)
+  end
+end
+#--------------------------------------------------------------------------------------------------------
+
+# Question 3
+class Boat 
+  include Moveable 
+
+  attr_reader :hull_count, :propeller_count 
+
+  def initialize(num_propellers, num_hulls, km_traveled_per_liter, liters_of_fuel_capacity)
+    @hull_count = num_hulls 
+    @propeller_count = num_propellers 
+    self.fuel_efficiency = km_traveled_per_liter
+    self.fuel_capacity = liters_of_fuel_capacity
+  end
+
+  def range 
+    super + 10           # Question 4 answer 
+  end 
+end 
+
+class Motorboat < Boat 
+  def initialize(km_traveled_per_liter, liters_of_fuel_capacity)
+    super (1, 1, km_traveled_per_liter, liters_of_fuel_capacity)
+  end
+end 
+
+
+class Catamaran < Boat 
+end
+#--------------------------------------------------------------------------------------------------------
+
+# Question 4 
+# The designers of the vehicle management system now want to make an adjustment for how the range of vehicles is calculated. 
+# For the seaborne vehicles, due to prevailing ocean currents, they want to add an additional 10km of range even if the 
+# vehicle is out of fuel.
+# Alter the code related to vehicles so that the range for autos and motorcycles is still calculated as before, but for 
+# catamarans and motorboats, the range method will return an additional 10km.
 
