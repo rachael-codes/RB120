@@ -1,8 +1,6 @@
 # Assignment: OOP Tic Tac Toe
 # Date: 03/19/21
 
-# TO-DO: OOP Bonus Features 
-
 module Formattable
   def joinor(arr, punc =', ', conj = 'or ')
     count = 1
@@ -45,7 +43,7 @@ class Board
     @squares.keys.select {|key| @squares[key].unmarked? }
   end
 
-  def draw_round?
+  def tie?
     unmarked_keys.empty?
   end
 
@@ -236,7 +234,7 @@ class TTTGame
   def players_move
     loop do
       current_player_moves
-      break if board.someone_won? || board.draw_round?
+      break if board.someone_won? || board.tie?
     end
   end 
 
