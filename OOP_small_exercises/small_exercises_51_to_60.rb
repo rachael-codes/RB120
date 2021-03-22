@@ -189,7 +189,7 @@ end
 
 # # This exercise is about collaborator objects; instance variables don't have to be simple variables like numbers and strings, 
 # # but can contain any object that might be needed. In our solution, the Pet class has two String collaborator objects, 
-# # Owner has a String and an Array of Pet objects, and Shelter has a Hash of Owner objects.
+# # Owner has a String and an Array of Pet objects that are collaborators, and Shelter has a Hash of Owner objects that's a collaborator.
 
 butterscotch = Pet.new('cat', 'Butterscotch')
 pudding      = Pet.new('cat', 'Pudding')
