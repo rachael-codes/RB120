@@ -133,59 +133,105 @@ end
 
 # # ------------------------------------------------------------------------------------------------
 
-# # EXERCISE 7 ** HARDEST ONE YET ** RE-DO LATER 
-class Pet
-  attr_reader :animal, :name
+# # EXERCISE 7 
 
-  def initialize(animal, name)
-    @animal = animal
-    @name = name
-  end
+# LS's solution: 
+# class Pet
+#   attr_reader :animal, :name
 
-  def to_s
-    "a #{animal} named #{name}"
-  end
-end
+#   def initialize(animal, name)
+#     @animal = animal
+#     @name = name
+#   end
 
-class Owner
-  attr_reader :name, :pets
+#   def to_s
+#     "a #{animal} named #{name}"
+#   end
+# end
+
+# class Owner
+#   attr_reader :name, :pets
+
+#   def initialize(name)
+#     @name = name
+#     @pets = []
+#   end
+
+#   def add_pet(pet)
+#     @pets << pet
+#   end
+
+#   def number_of_pets
+#     pets.size
+#   end
+
+#   def print_pets
+#     puts pets
+#   end
+# end
+
+# class Shelter
+#   def initialize
+#     @owners = {}
+#   end
+
+#   def adopt(owner, pet)
+#     owner.add_pet(pet)
+#     @owners[owner.name] ||= owner
+#   end
+
+#   def print_adoptions
+#     @owners.each_pair do |name, owner|
+#       puts "#{name} has adopted the following pets:"
+#       owner.print_pets
+#       puts
+#     end
+#   end
+# end
+
+# My own solution: 
+class Owner 
+  attr_reader :name
+  attr_accessor :number_of_pets
 
   def initialize(name)
-    @name = name
-    @pets = []
-  end
+    @name = name 
+    @number_of_pets = 0
+  end 
+end 
 
-  def add_pet(pet)
-    @pets << pet
-  end
+class Pet 
+  attr_reader :animal_type, :name 
 
-  def number_of_pets
-    pets.size
-  end
+  def initialize(animal_type, name) # Pet class has two string collab objects 
+    @animal_type = animal_type 
+    @name = name 
+  end 
+end 
 
-  def print_pets
-    puts pets
-  end
-end
-
-class Shelter
+class Shelter 
   def initialize
-    @owners = {}
-  end
+    @owners_and_pets = {}
+  end 
 
   def adopt(owner, pet)
-    owner.add_pet(pet)
-    @owners[owner.name] ||= owner
-  end
+    if !(@owners_and_pets.include?(owner)) 
+      @owners_and_pets[owner] = [pet] 
+    else 
+      @owners_and_pets[owner] << pet 
+    end 
+    owner.number_of_pets += 1 
+  end 
 
   def print_adoptions
-    @owners.each_pair do |name, owner|
-      puts "#{name} has adopted the following pets:"
-      owner.print_pets
-      puts
-    end
-  end
-end
+    @owners_and_pets.each do |owner, pets|
+      puts "#{owner.name} has adopted the following pets:" 
+      pets.each { |pet| puts "a #{pet.animal_type} named #{pet.name}" } 
+      puts 
+    end 
+  end 
+end 
+
 
 # # This exercise is about collaborator objects; instance variables don't have to be simple variables like numbers and strings, 
 # # but can contain any object that might be needed. In our solution, the Pet class has two String collaborator objects, 
