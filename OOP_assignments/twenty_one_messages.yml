@@ -1,0 +1,36 @@
+# Messages to accompany the game 'Twenty One' 
+# Date: 2/3/21
+
+welcome: "Welcome to 21! \n\nYour goal is to try to get as close to 21 as possible without going over.
+\nIf you go over 21, it's a 'bust' and you lose.\n\n" 
+
+start_instructions: "To start, the dealer will deal two cards to you and two to itself. 
+\nYou will only be able to see one of the dealer's cards.\n\n" 
+
+hit_or_stay: "Do you want to hit or stay?\n"
+
+you_busted: "Oh no! You busted."
+
+dealer_busted: "The dealer busted!"
+
+dealer_stays: "The dealer has chosen to stay."
+
+dealer_draws: "The dealer has drawn another card."
+
+dealer_won_round: "Looks like the dealer won this time."
+
+dealer_won_due_to_player_bust: "Since you busted, the dealer has won this round." 
+
+player_won_round: "Woohoo! It looks like you won."
+
+tie: "It's a tie!"
+
+play_again?: "Would you like to play another round ('y' for yes or 'n' for no)?"
+
+invalid: "That's not a valid choice."
+
+player_wins_game: "Congratulations! You are the winner."
+
+dealer_wins_game_or_player_exits_during_tie: "Better luck next time!"
+
+thanks: "Thanks for playing 21! See you next time."
