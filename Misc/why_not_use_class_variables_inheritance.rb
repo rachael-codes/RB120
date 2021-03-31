@@ -32,3 +32,88 @@ p GroomsGuest.num_of_people # => Here, the number is still 11 because a new inst
 # to reassign the number to 15. 
 GroomsGuest.new 
 p GroomsGuest.num_of_people # => 15 
+
+
+
+module Armable 
+  def attach_armor
+    puts "Attaching armor"
+  end 
+
+  def remove_armor
+    puts "Removing armor"
+  end 
+end 
+
+module CastSpellable 
+  def cast_spell(spell)
+    puts "Casting #{spell}"
+  end 
+end 
+
+class Player 
+  attr_reader :name, :health, :strength, :intelligence 
+
+  def initialize(name)
+    @name = name 
+    @health = 100
+    @strength = roll_dice 
+    @intelligence = roll_dice
+  end 
+
+  def heal(amount_of_change)
+    @health += amount_of_change
+  end 
+
+  def hurt(amount_of_change)
+    @health -= amount_of_change
+  end 
+
+  def to_s
+    "Name: #{name} \nClass: #{self.class}\nHealth: #{health} \nStrength: #{strength}\nIntelligence: #{intelligence}"
+  end 
+
+  private 
+
+  def roll_dice 
+    (2..12).to_a.sample
+  end 
+end 
+
+class Warrior < Player 
+  include Armable 
+
+  def initialize(name)
+    super(name)
+    @strength = roll_dice + 2 
+  end 
+end 
+
+class Magician < Player 
+  include CastSpellable 
+
+  def initialize(name)
+    super(name)
+    @intelligence = roll_dice + 2 
+  end 
+end 
+
+class Paladin < Player 
+  include Armable 
+  include CastSpellable 
+end 
+
+class Bard < Player 
+  include CastSpellable 
+
+  def create_potion
+    puts "Concocting potion"
+  end 
+end 
+
+
+rachael = Bard.new('Rachael')
+puts rachael
+
+
+
