@@ -1,3 +1,16 @@
+
+
+Two instances of self: 
+    self, inside of an instance method, references the instance (object) that called the method - the calling object. Therefore, self.weight= is the same as sparky.weight=, in our example.
+
+    self, outside of an instance method, references the class and can be used to define class methods. Therefore if we were to define a name class method, def self.name=(n) is the same as def GoodDog.name=(n).
+
+
+
+
+
+
+
 # Explain what's happening here:
 sparky = GoodDog.new("Sparky")
 
@@ -46,7 +59,7 @@ end
 
 What if we find a bug in this code, or if someone says we need to change the format to something else? It's much easier to just reference a getter method, and make the change in one place.
 
-
+the to_s method is called automatically on the object when we use it with puts or when used with string interpolation.
 
 
 
